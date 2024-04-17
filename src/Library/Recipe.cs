@@ -33,6 +33,28 @@ namespace Full_GRASP_And_SOLID.Library
                 Console.WriteLine($"{step.Quantity} de '{step.Input.Description}' " +
                     $"usando '{step.Equipment.Description}' durante {step.Time}");
             }
+
+            double totalCost = GetProductionCost();
+            Console.WriteLine($"Costo de producción: {totalCost}");
+        }
+
+    public double GetProductionCost()
+        {
+            double costInsumos = 0;
+            double costEquipos = 0;
+            foreach (Step step in this.steps)
+            {
+                costInsumos = step.Quantity * step.Input.UnitCost;
+           
+            }
+            foreach (Step step in this.steps)
+            {
+                costEquipos += (step.Time / 60.0) * step.Equipment.HourlyCost;
+            }
+
+            double totalCost = costInsumos + costEquipos;
+            return totalCost;
         }
     }
 }
+//La modificación sigue el principio de Responsabilidad Única (SRP), ahora la clase Recipe tiene la unica responsabilidad de gestionar la receta y calcular su costo total de producción.
